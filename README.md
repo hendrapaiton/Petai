@@ -80,15 +80,10 @@ To get a local copy up and running, please follow these simple steps.
 
 To run the application:
 
-1.  Start the backend server:
+1.  Start the backend development server:
     ```sh
-    # From the backend directory
-    python manage.py runserver
+    python app.py
     ```
-2.  Start the frontend development server:
-    `sh
-    # From the frontend directory
-    npm run dev
     `Open your browser and navigate to`http://localhost:8050`.
 
 ## Roadmap
