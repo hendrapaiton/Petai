@@ -9,8 +9,8 @@ def create_pos_view(page: ft.Page):
         controls=[
             ft.Text("Etalase Produk", size=30),
             ft.ElevatedButton(
-                "Kembali ke Beranda",
-                on_click=lambda _: page.go(routes.HOME)
+                "Kunjungi Admin",
+                on_click=lambda _: page.go(routes.ADMIN)
             ),
         ],
         vertical_alignment=ft.MainAxisAlignment.CENTER,
