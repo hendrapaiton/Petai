@@ -6,7 +6,7 @@ from .view.pos.index import create_pos_view
 
 
 def main(page: ft.Page):
-    page.title = "PETSHOP DENGAN ARTIFICIAL INTELIGENCE | PETAI"
+    page.title = "AI-Powered Point of Sale for Petshop | PETAI"
     page.theme_mode = ft.ThemeMode.DARK
     page.padding = 0
     page.vertical_alignment = ft.MainAxisAlignment.START
