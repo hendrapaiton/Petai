@@ -1,4 +1,8 @@
 HOME = "/"
 POS = "/pos"
 ADMIN = "/admin"
+ADMIN_DASHBOARD = "/admin/dashboard"
+ADMIN_PRODUCT = "/admin/product"
+ADMIN_SALES = "/admin/sales"
+ADMIN_STOCK = "/admin/stock"
 NOT_FOUND = "/404"

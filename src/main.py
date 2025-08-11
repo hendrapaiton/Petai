@@ -1,7 +1,7 @@
 import flet as ft
 
 from . import routes
-from .view.admin.index import create_admin_view
+from .view.admin.dashboard.index import create_admin_view
 from .view.pos.index import create_pos_view
 
 
@@ -10,7 +10,6 @@ def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.DARK
     page.padding = 0
     page.vertical_alignment = ft.MainAxisAlignment.START
-    print(page.route)
 
     def route_change(e: ft.RouteChangeEvent):
         page.views.clear()
@@ -18,6 +17,14 @@ def main(page: ft.Page):
         if e.route in (routes.HOME, routes.POS):
             page.views.append(create_pos_view(page))
         elif e.route == routes.ADMIN:
+            page.views.append(create_admin_view(page))
+        elif e.route == routes.ADMIN_DASHBOARD:
+            page.views.append(create_admin_view(page))
+        elif e.route == routes.ADMIN_PRODUCT:
+            page.views.append(create_admin_view(page))
+        elif e.route == routes.ADMIN_SALES:
+            page.views.append(create_admin_view(page))
+        elif e.route == routes.ADMIN_STOCK:
             page.views.append(create_admin_view(page))
         else:
             page.views.append(
