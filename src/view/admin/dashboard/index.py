@@ -5,7 +5,7 @@ from src import routes
 
 def create_admin_view(page: ft.Page, route: str):
     menu_items_data = [
-        {"title": "Dasbor", "icon": ft.Icons.SHOP, "data": "overview"},
+        {"title": "Dasbor", "icon": ft.Icons.SHOPPING_CART, "data": "overview"},
         {"title": "Produk", "icon": ft.Icons.INVENTORY, "data": "product"},
     ]
 
@@ -36,11 +36,6 @@ def create_admin_view(page: ft.Page, route: str):
         )
         content_area.controls.append(new_content)
 
-        content_area.controls.append(
-            ft.ElevatedButton(
-                "Kembali ke Beranda", on_click=lambda _: page.go(routes.HOME)
-            )
-        )
         content_area.update()
 
     sidebar_items = [
@@ -49,6 +44,16 @@ def create_admin_view(page: ft.Page, route: str):
                 text_align=ft.TextAlign.CENTER),
         ft.Divider(height=10, color="transparent"),
     ]
+
+    sidebar_items.append(
+        ft.Container(
+            content=ft.ElevatedButton(
+                "Kembali ke Beranda", on_click=lambda _: page.go(routes.HOME)),
+            alignment=ft.Alignment.CENTER)
+    )
+
+    sidebar_items.append(ft.Divider(height=10, color="transparent"))
+    
     for item in menu_items_data:
         sidebar_items.append(
             ft.ListTile(
@@ -70,9 +75,6 @@ def create_admin_view(page: ft.Page, route: str):
     content_area = ft.Column(
         [
             content_mapping[initial_data_key],
-            ft.ElevatedButton(
-                "Kembali ke Beranda", on_click=lambda _: page.go(routes.HOME)
-            ),
         ],
         expand=True,
         alignment=ft.MainAxisAlignment.CENTER,
