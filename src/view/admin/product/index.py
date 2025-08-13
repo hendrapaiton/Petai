@@ -3,7 +3,7 @@ import flet as ft
 from src import routes
 
 
-def create_admin_view(page: ft.Page):
+def create_product_view(page: ft.Page):
     return ft.View(
         route=routes.ADMIN_PRODUCT,
         controls=[

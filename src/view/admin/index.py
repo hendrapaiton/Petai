@@ -3,7 +3,7 @@ import flet as ft
 from src import routes
 
 
-def create_dashboard_view(page: ft.Page, route: str):
+def create_admin_view(page: ft.Page, route: str):
     menu_items_data = [
         {"title": "Dasbor", "icon": ft.Icons.SHOPPING_CART, "data": "overview"},
         {"title": "Produk", "icon": ft.Icons.INVENTORY, "data": "product"},
@@ -53,7 +53,7 @@ def create_dashboard_view(page: ft.Page, route: str):
     )
 
     sidebar_items.append(ft.Divider(height=10, color="transparent"))
-
+    
     for item in menu_items_data:
         sidebar_items.append(
             ft.ListTile(

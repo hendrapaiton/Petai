@@ -5,7 +5,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src import routes
-from src.view.admin.dashboard.index import create_admin_view
+from src.view.admin.index import create_admin_view
 from src.view.pos.index import create_pos_view
 
 
