@@ -3,7 +3,23 @@ import flet as ft
 from src import routes
 
 
-def create_admin_view(page: ft.Page):
+def create_admin_view(page: ft.Page, route: str):
+    menu_items_data = [
+        {"title": "Dasbor", "icon": ft.Icons.SHOP, "data": "overview"},
+        {"title": "Produk", "icon": ft.Icons.INVENTORY, "data": "product"},
+    ]
+
+    content_mapping = {
+        "overview": ft.Text("Ini adalah halaman Dasbor", size=20),
+        "product": ft.Text("Ini adalah halaman Produk", size=20),
+    }
+
+    route_to_data_key = {
+        routes.ADMIN: "overview",
+        routes.ADMIN_DASHBOARD: "overview",
+        routes.ADMIN_PRODUCT: "product",
+    }
+
     def handle_menu_click(e):
         for control in sidebar.controls:
             if isinstance(control, ft.ListTile):
@@ -15,47 +31,33 @@ def create_admin_view(page: ft.Page):
         content_area.controls.clear()
         menu_clicked = e.control.data
 
-        if menu_clicked == "menu_1":
-            content_area.controls.append(
-                ft.Text("Ini adalah halaman untuk Menu 1", size=20))
-        elif menu_clicked == "menu_2":
-            content_area.controls.append(
-                ft.Text("Ini adalah halaman untuk Menu 2", size=20))
-        elif menu_clicked == "menu_3":
-            content_area.controls.append(
-                ft.Text("Ini adalah halaman untuk Menu 3", size=20))
+        new_content = content_mapping.get(
+            menu_clicked, ft.Text("Konten tidak ditemukan.", size=20)
+        )
+        content_area.controls.append(new_content)
 
         content_area.controls.append(
             ft.ElevatedButton(
                 "Kembali ke Beranda", on_click=lambda _: page.go(routes.HOME)
             )
         )
-
         content_area.update()
 
     sidebar_items = [
         ft.Text("Petshop Management".upper(),
-                size=18, weight=ft.FontWeight.BOLD),
+                size=18, weight=ft.FontWeight.BOLD,
+                text_align=ft.TextAlign.CENTER),
         ft.Divider(height=10, color="transparent"),
-        ft.ListTile(
-            title=ft.Text("Menu 1"),
-            leading=ft.Icon(ft.Icons.DASHBOARD),
-            on_click=handle_menu_click,
-            data="menu_1",
-        ),
-        ft.ListTile(
-            title=ft.Text("Menu 2"),
-            leading=ft.Icon(ft.Icons.PEOPLE),
-            on_click=handle_menu_click,
-            data="menu_2",
-        ),
-        ft.ListTile(
-            title=ft.Text("Menu 3"),
-            leading=ft.Icon(ft.Icons.SETTINGS),
-            on_click=handle_menu_click,
-            data="menu_3",
-        ),
     ]
+    for item in menu_items_data:
+        sidebar_items.append(
+            ft.ListTile(
+                title=ft.Text(item["title"]),
+                leading=ft.Icon(item["icon"]),
+                on_click=handle_menu_click,
+                data=item["data"],
+            )
+        )
 
     sidebar = ft.Column(
         controls=sidebar_items,
@@ -64,9 +66,10 @@ def create_admin_view(page: ft.Page):
         horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
     )
 
+    initial_data_key = route_to_data_key.get(route, "dashboard")
     content_area = ft.Column(
         [
-            ft.Text("Ini adalah halaman untuk Menu 1", size=20),
+            content_mapping[initial_data_key],
             ft.ElevatedButton(
                 "Kembali ke Beranda", on_click=lambda _: page.go(routes.HOME)
             ),
@@ -76,10 +79,12 @@ def create_admin_view(page: ft.Page):
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
     )
 
-    first_menu_item = next(
-        (c for c in sidebar.controls if isinstance(c, ft.ListTile)), None)
-    if first_menu_item:
-        first_menu_item.bgcolor = ft.Colors.PRIMARY_CONTAINER
+    initial_menu_item = next(
+        (c for c in sidebar.controls if isinstance(
+            c, ft.ListTile) and c.data == initial_data_key), None
+    )
+    if initial_menu_item:
+        initial_menu_item.bgcolor = ft.Colors.PRIMARY_CONTAINER
 
     main_layout = ft.Row(
         [sidebar, ft.VerticalDivider(
@@ -88,8 +93,8 @@ def create_admin_view(page: ft.Page):
     )
 
     return ft.View(
-        route=routes.ADMIN_DASHBOARD, 
-        controls=[main_layout], 
-        padding=ft.padding.all(10), 
+        route=route,
+        controls=[main_layout],
+        padding=ft.padding.all(10),
         bgcolor=ft.Colors.SURFACE
     )

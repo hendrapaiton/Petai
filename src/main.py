@@ -1,8 +1,12 @@
 import flet as ft
+import sys
+import os
 
-from . import routes
-from .view.admin.dashboard.index import create_admin_view
-from .view.pos.index import create_pos_view
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from src import routes
+from src.view.admin.dashboard.index import create_admin_view
+from src.view.pos.index import create_pos_view
 
 
 def main(page: ft.Page):
@@ -14,18 +18,18 @@ def main(page: ft.Page):
     def route_change(e: ft.RouteChangeEvent):
         page.views.clear()
 
+        admin_routes = (
+            routes.ADMIN,
+            routes.ADMIN_DASHBOARD,
+            routes.ADMIN_PRODUCT,
+            routes.ADMIN_SALES,
+            routes.ADMIN_STOCK,
+        )
+
         if e.route in (routes.HOME, routes.POS):
             page.views.append(create_pos_view(page))
-        elif e.route == routes.ADMIN:
-            page.views.append(create_admin_view(page))
-        elif e.route == routes.ADMIN_DASHBOARD:
-            page.views.append(create_admin_view(page))
-        elif e.route == routes.ADMIN_PRODUCT:
-            page.views.append(create_admin_view(page))
-        elif e.route == routes.ADMIN_SALES:
-            page.views.append(create_admin_view(page))
-        elif e.route == routes.ADMIN_STOCK:
-            page.views.append(create_admin_view(page))
+        elif e.route in admin_routes:
+            page.views.append(create_admin_view(page, e.route))
         else:
             page.views.append(
                 ft.View(
