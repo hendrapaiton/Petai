@@ -1,6 +1,8 @@
 import flet as ft
 
 from src import routes
+from src.view.admin.dashboard.index import create_dashboard_content
+from src.view.admin.product.index import create_product_content
 
 
 def create_admin_view(page: ft.Page, route: str):
@@ -10,8 +12,8 @@ def create_admin_view(page: ft.Page, route: str):
     ]
 
     content_mapping = {
-        "overview": ft.Text("Ini adalah halaman Dasbor", size=20),
-        "product": ft.Text("Ini adalah halaman Produk", size=20),
+        "overview": create_dashboard_content(),
+        "product": create_product_content(),
     }
 
     route_to_data_key = {
@@ -53,7 +55,7 @@ def create_admin_view(page: ft.Page, route: str):
     )
 
     sidebar_items.append(ft.Divider(height=10, color="transparent"))
-    
+
     for item in menu_items_data:
         sidebar_items.append(
             ft.ListTile(
@@ -71,7 +73,7 @@ def create_admin_view(page: ft.Page, route: str):
         horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
     )
 
-    initial_data_key = route_to_data_key.get(route, "dashboard")
+    initial_data_key = route_to_data_key.get(route, "overview")
     content_area = ft.Column(
         [
             content_mapping[initial_data_key],
